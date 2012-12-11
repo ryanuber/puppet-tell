@@ -1,0 +1,8 @@
+name         'ryanuber-tell'
+version      '0.1.0'
+source       'git://github.com/ryanuber/puppet-tell'
+author       'Ryan Uber <ru@ryanuber.com>'
+license      'MIT'
+summary      'Tell'
+description  'Tell external people or things about changes to resources'
+project_page 'http://github.com/ryanuber/puppet-tell'
