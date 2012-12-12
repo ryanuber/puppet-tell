@@ -137,9 +137,9 @@ holler at ya!"
     Puppet.debug("Attempting to encode using library '#{format}', class '#{klass}'")
 
     begin
-        require format
+      require format
     rescue
-        fail Puppet::Error, "Failed to encode using '#{format}'"
+      fail Puppet::Error, "Failed to require library '#{format}'"
     end
 
     return eval(klass).dump(data) if format == 'yaml'
@@ -147,7 +147,7 @@ holler at ya!"
   end
 
   def check_all_attributes(refreshing = false)
-    self.class.checks.each { |check| 
+    self.class.checks.each do |check|
       next if refreshing and check == :refreshonly
       if @parameters.include?(check)
         val = @parameters[check].value
@@ -156,7 +156,7 @@ holler at ya!"
           return false unless @parameters[check].check(value)
         end     
       end     
-    }
+    end
     true
   end
 
