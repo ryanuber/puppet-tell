@@ -85,10 +85,6 @@ holler at ya!"
     end
   end
 
-  newparam(:message) do
-    desc "The message to send. This is free form text and is not content restricted."
-  end
-
   newparam(:format) do
     desc "The encoding type to use for the resource object."
     newvalues(:json, :yaml)
