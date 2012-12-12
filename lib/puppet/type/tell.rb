@@ -140,8 +140,8 @@ holler at ya!"
         fail Puppet::Error, "Failed to encode using '#{format}'"
     end
 
-    eval(klass).dump(data) if format == 'yaml'
-    eval(klass).pretty_generate(data) if format == 'json'
+    return eval(klass).dump(data) if format == 'yaml'
+    return eval(klass).pretty_generate(data) if format == 'json'
   end
 
   def check_all_attributes(refreshing = false)
