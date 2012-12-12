@@ -54,7 +54,7 @@ Puppet::Type.type(:tell).provide :mail do
   end
 
   def tell
-    subject = "Puppet: #{@resource.to_s}" unless subject != nil
+    subject = (@resource[:subject] == nil ? "Puppet: #{@resource.to_s}" : @resource[:subject])
     message = "From: #{@resource[:from]}\r\n" +
               "To: #{@resource[:dest]}\r\n" +
               "Subject: #{subject}\r\n\r\n" +
