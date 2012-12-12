@@ -40,12 +40,16 @@ useful if you are just triggering it from Class[main] all the time).
 You can still specify refreshonly => false, even though there
 probably isn't a valid use case for it, at least not yet...
 
-While using the webhooks provider, the request will be sent using
-an HTTP GET exactly as you specify, nothing more nothing less.
-This means that using HTTP GET will not attempt to send the encoded
-resource. You can, however, specify the 'post' parameter, which
-will send the encoded resource using the HTTP POST parameter
-specified by the 'post' option.
+Web hooks
+---------
+
+While using web hooks, the default behavior is to simply make a GET
+request to the URL you specify in the 'dest' parameter with no
+request parameters. If you specify one of 'get' or 'post', a
+respective query will be sent to the url specified by 'dest', and
+additionally, the resource that triggered the tell resource will be
+encoded and sent by the parameter name specified. See below for a
+better explanation.
 
 Example
 -------
@@ -153,5 +157,3 @@ In the near future
 
 * Further extending webhooks support to support remaining HTTP methods and HTTPS
 * SNMP support?
-* FIXME: I might be misusing the providers - they aren't really going to be
-  different between systems.

@@ -32,6 +32,10 @@ require 'net/http'
 
 Puppet::Type.type(:tell).provide :webhook do
 
+  Puppet::Type.type(:tell).newparam(:get) do
+    desc = "Name of the GET parameter to occupy."
+  end
+
   Puppet::Type.type(:tell).newparam(:post) do
     desc = "Name of the POST parameter to occupy in the POST body."
   end
@@ -44,6 +48,9 @@ Puppet::Type.type(:tell).provide :webhook do
       request = Net::HTTP::Post.new(uri.path)
       request.set_form_data({@resource[:post] => @resource.encode(@resource.get_triggers, @resource[:format])})
     else
+      if @resource[:get] != nil
+        uri.query = URI.escape("#{@resource[:get]}=#{@resource.encode(@resource.get_triggers, @resource[:format])}")
+      end
       Puppet.debug("Performing HTTP GET: #{uri.to_s}")
       request = Net::HTTP::Get.new(uri.to_s)
     end
