@@ -31,11 +31,7 @@ require 'puppet/provider'
 require 'net/smtp'
 
 Puppet::Type.type(:tell).provide :mail do
-
-  # This actually isn't useful for anything right now other than suppressing
-  # the "multiple default providers" message... Need to take another look at
-  # this.
-  defaultfor :osfamily => :redhat
+  defaultfor :kernel => 'Linux'
 
   Puppet::Type.type(:tell).newparam(:from) do
     desc = "The 'from:' address of the message. Defaults to 'puppet@[your-fqdn]'.
