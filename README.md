@@ -40,6 +40,13 @@ useful if you are just triggering it from Class[main] all the time).
 You can still specify refreshonly => false, even though there
 probably isn't a valid use case for it, at least not yet...
 
+While using the webhooks provider, the request will be sent using
+an HTTP GET exactly as you specify, nothing more nothing less.
+This means that using HTTP GET will not attempt to send the encoded
+resource. You can, however, specify the 'post' parameter, which
+will send the encoded resource using the HTTP POST parameter
+specified by the 'post' option.
+
 Example
 -------
 

@@ -32,28 +32,24 @@ require 'net/http'
 
 Puppet::Type.type(:tell).provide :webhook do
 
-  Puppet::Type.type(:tell).newparam(:get) do
-    desc = "Name of the GET parameter to send in the query parameters."
-  end
-
   Puppet::Type.type(:tell).newparam(:post) do
     desc = "Name of the POST parameter to occupy in the POST body."
   end
 
   def tell
-    url = URI.parse(@resource[:dest])
-    url.path = '/' unless url.path != ''
-    if @resource[:get] != nil
-      Puppet.debug("Performing HTTP GET: #{url.to_s}")
-      request = Net::HTTP::Get.new(url.path)
-    elsif @resource[:post] != nil
-      Puppet.debug("Performing HTTP POST: #{url.to_s}")
-      request = Net::HTTP::Post.new(url.path)
+    uri = URI.parse(@resource[:dest])
+    uri.path = '/' unless uri.path != ''
+    if @resource[:post] != nil
+      Puppet.debug("Performing HTTP POST: #{uri.to_s}")
+      request = Net::HTTP::Post.new(uri.path)
       request.set_form_data({@resource[:post] => @resource.encode(@resource.get_triggers, @resource[:format])})
+    else
+      Puppet.debug("Performing HTTP GET: #{uri.to_s}")
+      request = Net::HTTP::Get.new(uri.to_s)
     end
-    response = Net::HTTP.start(url.host, url.port) {|http| http.request(request) }
+    response = Net::HTTP.start(uri.host, uri.port) {|http| http.request(request) }
     fail Puppet::Error, "Web hook at '#{@resource[:dest]}' returned #{response.code}, expected 200" unless response.code == "200"
-    Puppet.debug("Received response code #{response.code} during request to #{url.to_s}")
+    Puppet.debug("Received response code #{response.code} during request to #{uri.to_s}")
   end
 
 end
