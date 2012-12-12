@@ -69,6 +69,14 @@ Puppet DSL:
             post => 'packagedata';
     }
 
+When you run it, you will see something like this:
+
+    /Stage[main]//Package[vim-enhanced]/ensure: created
+    /Stage[main]//Tell[package_updated_webhook]: Triggered 'refresh' from 1 events
+    /Stage[main]//Tell[package_updated_email]/returns: Successfully told root@localhost
+    /Stage[main]//Tell[package_updated_email]: Triggered 'refresh' from 1 events
+    Finished catalog run in 4.02 seconds
+
 Results in the default YAML format:
 
     ---
