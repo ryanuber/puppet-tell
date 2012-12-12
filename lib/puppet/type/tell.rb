@@ -54,8 +54,7 @@ holler at ya!"
   end
 
   newparam(:name) do
-    isnamevar
-    desc "Resource name"
+    desc "The name of the tell resource"
   end
 
   newparam(:refresh) do
@@ -132,23 +131,17 @@ holler at ya!"
   end
 
   def encode(data, format)
-    if format.to_s == 'yaml'
-      begin
-        require 'yaml'
-      rescue
-        fail Puppet::Error, "Failed to encode in YAML"
-      end
-      return YAML::dump(data)
-    elsif format.to_s == "json"
-      begin
-        require 'json'
-      rescue
-        fail Puppet::Error, "Failed to encode in JSON - is the JSON gem installed?"
-      end
-      return JSON::pretty_generate(data)
-    else
-      fail Puppet::Error, "Unknown encoding type '#{format}'"
+    format = format.to_s
+    klass = format.upcase
+
+    begin
+        require format
+    rescue
+        fail Puppet::Error, "Failed to encode using '#{format}'"
     end
+
+    eval(klass).dump(data) if format == 'yaml'
+    eval(klass).pretty_generate(data) if format == 'json'
   end
 
   def check_all_attributes(refreshing = false)
