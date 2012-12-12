@@ -115,7 +115,8 @@ holler at ya!"
   def refresh 
     if self.check_all_attributes(true)
       if self[:refresh]
-        provider.tell
+        notice "Successfully told #{@resource[:dest]}" if provider.tell
+        :told
       else
         self.property(:returns).sync
       end
