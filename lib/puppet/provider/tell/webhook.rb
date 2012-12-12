@@ -44,13 +44,16 @@ Puppet::Type.type(:tell).provide :webhook do
     url = URI.parse(@resource[:dest])
     url.path = '/' unless url.path != ''
     if @resource[:get] != nil
+      Puppet.debug("Performing HTTP GET: #{url.to_s}")
       request = Net::HTTP::Get.new(url.path)
     elsif @resource[:post] != nil
+      Puppet.debug("Performing HTTP POST: #{url.to_s}")
       request = Net::HTTP::Post.new(url.path)
       request.set_form_data({@resource[:post] => @resource.encode(@resource.get_triggers, @resource[:format])})
     end
     response = Net::HTTP.start(url.host, url.port) {|http| http.request(request) }
     fail Puppet::Error, "Web hook at '#{@resource[:dest]}' returned #{response.code}, expected 200" unless response.code == "200"
+    Puppet.debug("Received response code #{response.code} during request to #{url.to_s}")
   end
 
 end

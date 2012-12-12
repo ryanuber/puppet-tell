@@ -64,6 +64,7 @@ Puppet::Type.type(:tell).provide :mail do
               "Subject: #{subject}\r\n\r\n" +
               @resource.encode(@resource.get_triggers, @resource[:format])
     Net::SMTP.start('localhost') do |smtp|
+      Puppet.debug("Attempting to send message to #{@resource[:dest]} using SMTP relay localhost")
       smtp.send_message message, @resource[:from], @resource[:dest]
     end
   end

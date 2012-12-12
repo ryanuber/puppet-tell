@@ -134,6 +134,7 @@ holler at ya!"
   def encode(data, format)
     format = format.to_s
     klass = format.upcase
+    Puppet.debug("Attempting to encode using library '#{format}', class '#{klass}'")
 
     begin
         require format
