@@ -28,10 +28,10 @@ resource changes:
 * Using a web hook (way more interesting)
 
 It will expose any resource change by sending the resource data
-to the external party in YAML format. The resource data is simply
-the pson data directly from the changed resource. This is
-collected by looking it up in the relationship graph from the
-running catalog.
+to the external party. The resource data is simply the pson data
+directly from the changed resource, encoded in a format specified
+by the user. This is collected by looking it up in the
+relationship graph from the running catalog.
 
 This module follows almost the same logic as the 'exec' resource
 type utilizing 'refreshonly'. It is implemented slightly different,
